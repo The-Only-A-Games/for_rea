@@ -5,251 +5,269 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Reatile Toka Tshabalala</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Parisienne&display=swap"
-        rel="stylesheet">
-
     <style>
-        /* --- RESET & BASIC SETUP --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary-red: #800000;
+            --bg-pink: #fce4ec;
+            --text-dark: #333333;
         }
 
-        body {
-            height: 100vh;
-            width: 100vw;
-            background-color: #0a0a0a;
-            background-image: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Georgia', serif;
+            background-color: var(--bg-pink);
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Montserrat', sans-serif;
-            color: white;
             overflow: hidden;
         }
 
-        .main-wrapper {
-            text-align: center;
+        /* Background Romantic Animation */
+        .background-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 600px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
         }
 
-        /* --- TYPOGRAPHY --- */
-        h1.name {
-            font-family: 'Parisienne', cursive;
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-            color: #fff;
-            text-shadow: 0 0 15px rgba(255, 45, 85, 0.6);
-        }
-
-        p.question {
-            font-size: 1.2rem;
-            font-weight: 300;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-            opacity: 0.9;
-        }
-
-        p.dare-text {
-            font-size: 0.8rem;
-            color: #666;
-            font-style: italic;
-            margin-top: 10px;
-            opacity: 0.6;
-            transition: color 0.3s;
-        }
-
-        p.dare-text:hover {
-            color: #ff2d55;
-            opacity: 1;
-        }
-
-        /* --- THE BUTTON PLAYGROUND --- */
-        .btn-container {
-            position: relative;
-            width: 300px;
-            height: 220px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            margin: 0 auto;
-        }
-
-        button {
-            padding: 10px 25px;
-            font-size: 1rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-        }
-
-        /* YES Button */
-        .btn-yes {
-            background-color: #ff2d55;
-            color: white;
-            box-shadow: 0 0 15px rgba(255, 45, 85, 0.4);
-            z-index: 10;
-            position: relative;
-            margin-top: 10px;
-        }
-
-        .btn-yes:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(255, 45, 85, 0.7);
-        }
-
-        /* NO Button */
-        .btn-no {
-            background-color: transparent;
-            color: #999;
-            border: 2px solid #555;
+        .heart {
             position: absolute;
-            z-index: 1;
-            top: 70px;
-            transition: all 0.3s ease;
+            color: rgba(128, 0, 0, 0.2);
+            font-size: 20px;
+            animation: floatUp 6s linear infinite;
+            opacity: 0;
         }
 
-        .btn-no:hover {
-            border-color: #fff;
-            color: #fff;
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.6;
+            }
+
+            80% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
         }
 
-        /* --- SUCCESS STATE --- */
-        .success-container {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            animation: fadeInScale 0.8s ease-out forwards;
-        }
-
-        .success-text {
-            font-size: 3rem;
-            font-weight: 700;
-            color: #ff2d55;
-            text-shadow: 0 0 20px rgba(255, 45, 85, 0.8);
-            margin-bottom: 20px;
+        #container {
             text-align: center;
+            width: 90%;
+            max-width: 700px;
+            position: relative;
+            z-index: 1;
         }
 
-        .video-container video {
-            max-width: 280px;
-            width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(255, 45, 85, 0.3);
+        .slide {
+            display: none;
+            animation: elegantShow 1s ease forwards;
         }
 
-        @keyframes fadeInScale {
+        .active {
+            display: block;
+        }
+
+        @keyframes elegantShow {
             0% {
                 opacity: 0;
-                transform: scale(0.8);
+                transform: translateY(10px);
             }
 
             100% {
                 opacity: 1;
-                transform: scale(1);
+                transform: translateY(0);
             }
         }
 
-        /* --- MOBILE ADJUSTMENTS --- */
-        @media (max-width: 400px) {
-            h1.name {
-                font-size: 2.2rem;
-            }
+        h1,
+        h2 {
+            color: var(--primary-red);
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
 
-            .btn-container {
-                width: 280px;
-                height: 200px;
-            }
+        h1 {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 3.5rem;
+        }
 
-            .success-text {
-                font-size: 2rem;
-            }
+        p {
+            color: var(--text-dark);
+            line-height: 1.8;
+            font-size: 1.3rem;
+            margin: 0 auto;
+        }
 
-            /* Slightly smaller for mobile to fit emojis */
+        .btn-main {
+            background-color: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .button-group {
+            position: relative;
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            height: 60px;
+        }
+
+        #yesBtn {
+            background-color: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 100;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #noBtn {
+            background-color: transparent;
+            color: var(--primary-red);
+            border: 2px solid var(--primary-red);
+            padding: 15px 40px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .forced-yes {
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            border-radius: 0 !important;
+            font-size: 5rem !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        video {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 20px;
+            margin-top: 20px;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="main-wrapper" id="mainWrapper">
-        <h1 class="name">Reatile Toka Tshabalala</h1>
-        <p class="question">Will you be my Valentine?</p>
+    <div class="background-hearts" id="heartContainer"></div>
 
-        <div class="btn-container" id="playground">
-            <button class="btn-yes" id="yesBtn">Yes ❤️</button>
-            <button class="btn-no" id="noBtn">No 😢</button>
+    <div id="container">
+        <div class="slide active" id="slide1">
+            <h1>Reatile Toka Tshabalala</h1>
+            <p>Hey, I’ve been meaning to say this for a bit.</p>
+            <button class="btn-main" onclick="nextSlide(2)">Next</button>
         </div>
 
-        <p class="dare-text">Click no if you dare...</p>
-    </div>
+        <div class="slide" id="slide2">
+            <p>First, I just want to say I’m really glad we’re talking again. Being able to laugh with you and feel
+                comfortable around each other like we used to honestly means a lot to me.</p>
+            <button class="btn-main" onclick="nextSlide(3)">Continue</button>
+        </div>
 
-    <div class="success-container" id="successContainer">
-        <h1 class="success-text">Yayyyyy 😂🥳🎉</h1>
+        <div class="slide" id="slide3">
+            <p>I don’t take that for granted, especially knowing I messed things up before.</p>
+            <button class="btn-main" onclick="nextSlide(4)">Next</button>
+        </div>
 
-        <div class="video-container">
-            <video autoplay loop muted playsinline>
+        <div class="slide" id="slide4">
+            <p>I know I hurt you back then, and I’m not trying to pretend that didn’t happen or rush anything.</p>
+            <button class="btn-main" onclick="nextSlide(5)">Next</button>
+        </div>
+
+        <div class="slide" id="slide5">
+            <p>I just want you to know I’m genuinely sorry for how I handled things, and I respect you a lot for even
+                allowing me back into your space.</p>
+            <button class="btn-main" onclick="nextSlide(6)">Next</button>
+        </div>
+
+        <div class="slide" id="slide6">
+            <p>With Valentine’s Day coming up, I wanted to ask you something that’s been on my mind.</p>
+            <h2>Would you be my Valentine this year?</h2>
+            <div class="button-group">
+                <button id="yesBtn" onclick="showCelebration()">Yes</button>
+                <button id="noBtn" onclick="handleNo()">No</button>
+            </div>
+        </div>
+
+        <div class="slide" id="celebration">
+            <h2>Yaaayyyyyyy! 🥳✨🎉</h2>
+            <video id="celebrationVideo" loop muted playsinline>
                 <source src="cele.mp4" type="video/mp4">
-                Your browser does not support the video tag.
             </video>
         </div>
     </div>
 
     <script>
-        const yesBtn = document.getElementById('yesBtn');
-        const noBtn = document.getElementById('noBtn');
-        const playground = document.getElementById('playground');
-        const mainWrapper = document.getElementById('mainWrapper');
-        const successContainer = document.getElementById('successContainer');
+        // Create floating background hearts
+        const container = document.getElementById('heartContainer');
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 6000);
+        }
+        setInterval(createHeart, 400);
 
-        // Function to move 'No' button ONLY inside the playground div
-        function moveButton() {
-            const containerWidth = playground.offsetWidth;
-            const containerHeight = playground.offsetHeight;
-            const btnWidth = noBtn.offsetWidth;
-            const btnHeight = noBtn.offsetHeight;
-
-            const maxX = containerWidth - btnWidth;
-            const maxY = containerHeight - btnHeight;
-
-            const randomX = Math.random() * maxX;
-            const randomY = Math.random() * maxY;
-
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
+        let clicks = 0;
+        function nextSlide(num) {
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.getElementById('slide' + num).classList.add('active');
         }
 
-        // Desktop
-        noBtn.addEventListener('mouseover', moveButton);
+        function handleNo() {
+            clicks++;
+            const yes = document.getElementById('yesBtn');
+            const no = document.getElementById('noBtn');
+            yes.style.transform = `scale(${1 + clicks * 1.8})`;
 
-        // Mobile
-        noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            moveButton();
-        });
+            if (clicks >= 4) {
+                no.style.display = "none";
+                yes.classList.add('forced-yes');
+                yes.innerText = "YES!";
+            }
+        }
 
-        // Click fallback
-        noBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            moveButton();
-        });
-
-        // Yes Button Logic
-        yesBtn.addEventListener('click', () => {
-            mainWrapper.style.display = 'none';
-            successContainer.style.display = 'flex';
-        });
+        function showCelebration() {
+            document.getElementById('yesBtn').classList.remove('forced-yes');
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.getElementById('celebration').classList.add('active');
+            document.getElementById('celebrationVideo').play();
+        }
     </script>
 </body>
 
