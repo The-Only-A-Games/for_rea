@@ -3,271 +3,388 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Reatile Toka Tshabalala</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chapter 1: Us</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@200;400;600&display=swap"
+        rel="stylesheet">
     <style>
         :root {
-            --primary-red: #800000;
-            --bg-pink: #fce4ec;
-            --text-dark: #333333;
+            --pink: #ff007f;
+            --purple: #bf00ff;
+            --black: #050505;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body,
         html {
-            margin: 0;
-            padding: 0;
             height: 100%;
-            font-family: 'Georgia', serif;
-            background-color: var(--bg-pink);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 100%;
+            background: var(--black);
+            font-family: 'Montserrat', sans-serif;
+            color: white;
             overflow: hidden;
+            /* Strict one-view lock */
+            position: fixed;
         }
 
-        /* Background Romantic Animation */
-        .background-hearts {
+        #particle-canvas {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
+            inset: 0;
+            z-index: 2;
             pointer-events: none;
         }
 
-        .heart {
-            position: absolute;
-            color: rgba(128, 0, 0, 0.2);
-            font-size: 20px;
-            animation: floatUp 6s linear infinite;
-            opacity: 0;
-        }
-
-        @keyframes floatUp {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-
-            20% {
-                opacity: 0.6;
-            }
-
-            80% {
-                opacity: 0.6;
-            }
-
-            100% {
-                transform: translateY(-10vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        #container {
+        /* --- Intro Screen --- */
+        #intro-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 5000;
+            background: var(--black);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            width: 90%;
-            max-width: 700px;
-            position: relative;
-            z-index: 1;
+            padding: 20px;
+            transition: opacity 1s ease;
         }
 
-        .slide {
-            display: none;
-            animation: elegantShow 1s ease forwards;
-        }
-
-        .active {
-            display: block;
-        }
-
-        @keyframes elegantShow {
-            0% {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        h1,
-        h2 {
-            color: var(--primary-red);
-            font-weight: bold;
+        #intro-screen h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--purple);
+            letter-spacing: 5px;
             margin-bottom: 20px;
         }
 
+        .btn-start {
+            padding: 18px 40px;
+            border: 1px solid var(--pink);
+            background: transparent;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+
+        /* --- Narrative Stage --- */
+        #game-stage {
+            display: none;
+            height: 100%;
+            width: 100%;
+            position: relative;
+        }
+
+        .photo-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transform: scale(1.2);
+            transition: opacity 1.5s ease-in-out, transform 4s ease-out;
+            filter: brightness(0.4) contrast(1.1);
+        }
+
+        .photo-bg.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .ui-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, var(--black) 15%, transparent 60%, transparent 100%);
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .text-container {
+            position: absolute;
+            bottom: 80px;
+            left: 0;
+            width: 100%;
+            padding: 0 30px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .story-msg {
+            display: none;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .story-msg.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         h1 {
-            font-family: 'Brush Script MT', cursive;
-            font-size: 3.5rem;
+            font-family: 'Cinzel', serif;
+            color: var(--pink);
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+            text-shadow: 0 0 15px rgba(255, 0, 127, 0.3);
         }
 
         p {
-            color: var(--text-dark);
-            line-height: 1.8;
-            font-size: 1.3rem;
-            margin: 0 auto;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            font-weight: 200;
+            color: #efefef;
         }
 
-        .btn-main {
-            background-color: var(--primary-red);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            margin-top: 30px;
-            transition: all 0.3s ease;
-        }
-
-        .button-group {
-            position: relative;
-            margin-top: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 25px;
-            height: 60px;
-        }
-
-        #yesBtn {
-            background-color: var(--primary-red);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            z-index: 100;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        #noBtn {
-            background-color: transparent;
-            color: var(--primary-red);
-            border: 2px solid var(--primary-red);
-            padding: 15px 40px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-
-        .forced-yes {
-            position: fixed !important;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            border-radius: 0 !important;
-            font-size: 5rem !important;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-        }
-
-        video {
+        .tap-hint {
+            position: fixed;
+            bottom: 30px;
             width: 100%;
-            max-width: 600px;
-            border-radius: 20px;
-            margin-top: 20px;
+            text-align: center;
+            font-size: 0.6rem;
+            letter-spacing: 4px;
+            color: var(--purple);
+            z-index: 15;
+            opacity: 0.5;
+            animation: breathe 2s infinite;
+        }
+
+        @keyframes breathe {
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* --- Memory Level --- */
+        #memory-level {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--black);
+            z-index: 1000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .slot {
+            aspect-ratio: 1/1;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(191, 0, 255, 0.2);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            overflow: hidden;
+            transition: 0.5s;
+        }
+
+        .slot img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: 1s;
+        }
+
+        .slot.revealed {
+            border-color: var(--pink);
+        }
+
+        .slot.revealed img {
+            opacity: 1;
+        }
+
+        #final-footer {
+            margin-top: 30px;
+            font-family: 'Cinzel';
+            color: var(--purple);
+            font-size: 0.8rem;
+            letter-spacing: 3px;
         }
     </style>
 </head>
 
-<body>
+<body onclick="handleTap(event)">
 
-    <div class="background-hearts" id="heartContainer"></div>
+    <canvas id="particle-canvas"></canvas>
 
-    <div id="container">
-        <div class="slide active" id="slide1">
-            <h1>Reatile Toka Tshabalala</h1>
-            <p>Hey, I’ve been meaning to say this for a bit.</p>
-            <button class="btn-main" onclick="nextSlide(2)">Next</button>
+    <div id="intro-screen">
+        <h2>Chapter 1: Us</h2>
+        <p style="margin-bottom: 40px; font-weight: 200; opacity: 0.7;">Tap to go to the next paragraph.<br>Refresh to
+            restart.</p>
+        <button class="btn-start" onclick="beginExperience()">Begin</button>
+    </div>
+
+    <div id="game-stage">
+        <div id="photo-stack">
+            <div class="photo-bg active" style="background-image: url('pic1.jpeg')"></div>
+            <div class="photo-bg" style="background-image: url('pic2.jpeg')"></div>
+            <div class="photo-bg" style="background-image: url('pic3.jpeg')"></div>
+            <div class="photo-bg" style="background-image: url('pic4.jpeg')"></div>
+            <div class="photo-bg" style="background-image: url('pic5.jpeg')"></div>
+            <div class="photo-bg" style="background-image: url('pic1.jpeg')"></div>
+            <div class="photo-bg" style="background-image: url('pic2.jpeg')"></div>
         </div>
 
-        <div class="slide" id="slide2">
-            <p>First, I just want to say I’m really glad we’re talking again. Being able to laugh with you and feel
-                comfortable around each other like we used to honestly means a lot to me.</p>
-            <button class="btn-main" onclick="nextSlide(3)">Continue</button>
-        </div>
+        <div class="ui-gradient"></div>
 
-        <div class="slide" id="slide3">
-            <p>I don’t take that for granted, especially knowing I messed things up before.</p>
-            <button class="btn-main" onclick="nextSlide(4)">Next</button>
-        </div>
-
-        <div class="slide" id="slide4">
-            <p>I know I hurt you back then, and I’m not trying to pretend that didn’t happen or rush anything.</p>
-            <button class="btn-main" onclick="nextSlide(5)">Next</button>
-        </div>
-
-        <div class="slide" id="slide5">
-            <p>I just want you to know I’m genuinely sorry for how I handled things, and I respect you a lot for even
-                allowing me back into your space.</p>
-            <button class="btn-main" onclick="nextSlide(6)">Next</button>
-        </div>
-
-        <div class="slide" id="slide6">
-            <p>With Valentine’s Day coming up, I wanted to ask you something that’s been on my mind.</p>
-            <h2>Would you be my Valentine this year?</h2>
-            <div class="button-group">
-                <button id="yesBtn" onclick="showCelebration()">Yes</button>
-                <button id="noBtn" onclick="handleNo()">No</button>
+        <div class="text-container">
+            <div class="story-msg active" id="s0">
+                <h1>Reatile Toka Tshabalala.</h1>
+                <p>Before anything I thank you for choosing me when you didn’t have to.</p>
+            </div>
+            <div class="story-msg" id="s1">
+                <p>I know I don’t deserve you that’s why every second with you makes me feel like the <span
+                        style="color:var(--pink); font-weight:600;">luckiest man alive.</span></p>
+            </div>
+            <div class="story-msg" id="s2">
+                <h1>I want you to know…</h1>
+                <p>Not only are you the most beautiful, the most attractive girl but you’re so thoughtful, forgiving,
+                    and most importantly you bring out a better side of me that I’ve been struggling with.</p>
+            </div>
+            <div class="story-msg" id="s3">
+                <p>For all that you are, just know I love and respect you. I’m not good with words, in fact I never do
+                    stuff like this but for you it’s a change I’m excited to welcome in my life so hear me out when I
+                    say.</p>
+            </div>
+            <div class="story-msg" id="s4">
+                <p>You deserve the <span style="color:var(--purple); font-weight:600;">finest flowers</span>, a life
+                    where
+                    you don’t have to leave the house, where everything comes to you because we don’t want to deal with
+                    anxiety😂</p>
+            </div>
+            <div class="story-msg" id="s5">
+                <p>If we go outside than it’s for a farm or maybe the usual Le Roux chillas. All these things I’m unable
+                    to give or provide you with but I do hope my love with time you’ll let me work my way up, grow
+                    together and finally get what we deserve.</p>
+            </div>
+            <div class="story-msg" id="s6">
+                <h1>Because Reatile Toka Tshabalala...</h1>
+                <p>There’s no one else I’d rather do this life thing with. I love you Reatile Toka Tshabalala…more than
+                    you know</p>
             </div>
         </div>
+        <div class="tap-hint">TAP TO PROGRESS</div>
+    </div>
 
-        <div class="slide" id="celebration">
-            <h2>Yaaayyyyyyy! 🥳✨🎉</h2>
-            <video id="celebrationVideo" loop muted playsinline>
-                <source src="cele.mp4" type="video/mp4">
-            </video>
+    <div id="memory-level">
+        <h2 style="font-family: 'Cinzel'; color: var(--pink); margin-bottom: 20px; letter-spacing: 3px;">MEMORIES</h2>
+        <div class="memory-grid">
+            <div class="slot" onclick="reveal(this)">TAP<img src="pic1.jpeg"></div>
+            <div class="slot" onclick="reveal(this)">TAP<img src="pic2.jpeg"></div>
+            <div class="slot" style="grid-column: span 2; aspect-ratio: 2/1;" onclick="reveal(this)">TAP<img
+                    src="pic3.jpeg"></div>
+            <div class="slot" onclick="reveal(this)">TAP<img src="pic4.jpeg"></div>
+            <div class="slot" onclick="reveal(this)">TAP<img src="pic5.jpeg"></div>
         </div>
+        <div id="final-footer">I'll always be yours</div>
     </div>
 
     <script>
-        // Create floating background hearts
-        const container = document.getElementById('heartContainer');
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
-            container.appendChild(heart);
-            setTimeout(() => heart.remove(), 6000);
-        }
-        setInterval(createHeart, 400);
+        let step = 0;
+        let active = false;
 
-        let clicks = 0;
-        function nextSlide(num) {
-            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
-            document.getElementById('slide' + num).classList.add('active');
+        function beginExperience() {
+            document.getElementById('intro-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('intro-screen').style.display = 'none';
+                document.getElementById('game-stage').style.display = 'block';
+                active = true;
+            }, 1000);
         }
 
-        function handleNo() {
-            clicks++;
-            const yes = document.getElementById('yesBtn');
-            const no = document.getElementById('noBtn');
-            yes.style.transform = `scale(${1 + clicks * 1.8})`;
+        function handleTap(e) {
+            if (!active || step >= 7) return;
 
-            if (clicks >= 4) {
-                no.style.display = "none";
-                yes.classList.add('forced-yes');
-                yes.innerText = "YES!";
+            document.getElementById(`s${step}`).classList.remove('active');
+            const pics = document.querySelectorAll('.photo-bg');
+            pics[step].classList.remove('active');
+
+            step++;
+
+            if (step >= 7) {
+                active = false;
+                setTimeout(() => {
+                    document.getElementById('game-stage').style.display = 'none';
+                    document.getElementById('memory-level').style.display = 'flex';
+                }, 1000);
+                return;
+            }
+
+            document.getElementById(`s${step}`).classList.add('active');
+            pics[step].classList.add('active');
+        }
+
+        function reveal(el) {
+            el.classList.add('revealed');
+            el.childNodes[0].textContent = '';
+        }
+
+        // Floating "Aura" Particles (Pink and Purple)
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let particles = [];
+        // Color mixture: Pink (#ff007f) and Purple (#bf00ff)
+        const colors = ['rgba(255, 0, 127,', 'rgba(191, 0, 255,'];
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5;
+                this.speedY = Math.random() * -0.6 - 0.2; // Float UP
+                this.opacity = Math.random() * 0.4;
+                // Randomly assign one of the two colors
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+            update() {
+                this.y += this.speedY;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                // Apply color and opacity
+                ctx.fillStyle = `${this.color} ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
             }
         }
 
-        function showCelebration() {
-            document.getElementById('yesBtn').classList.remove('forced-yes');
-            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
-            document.getElementById('celebration').classList.add('active');
-            document.getElementById('celebrationVideo').play();
+        function init() {
+            for (let i = 0; i < 50; i++) particles.push(new Particle());
         }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
     </script>
 </body>
 
